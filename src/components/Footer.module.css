@@ -1,0 +1,144 @@
+.footer {
+  position: relative;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  padding-top: clamp(4rem, 6vw, 6.25rem);
+  z-index: 10;
+}
+
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2.75rem;
+}
+
+@media (min-width: 768px) {
+  .columns {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0;
+  }
+}
+
+.col {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.colContact {
+  order: 1;
+}
+
+@media (min-width: 768px) {
+  .colContact {
+    order: 0;
+  }
+}
+
+.separator {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .separator {
+    display: block;
+    width: 1.5px;
+    height: 136px;
+    background-color: rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    align-self: center;
+  }
+}
+
+.heading {
+  font-family: var(--font-ivy-presto), Georgia, serif;
+  font-size: 1.3125rem;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.text {
+  font-family: var(--font-tt-drugs), sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a.text:hover,
+a.text:focus-visible {
+  color: var(--red);
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--red);
+}
+
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5625rem;
+  margin-top: 0.25rem;
+}
+
+.socialLink {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
+  opacity: 1;
+}
+
+.bottom {
+  width: 100%;
+  margin-top: clamp(3.5rem, 5vw, 5rem);
+  padding: 1.8rem 1rem;
+  padding-bottom: max(1.8rem, env(safe-area-inset-bottom, 0px));
+  border-top: 1.5px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  place-items: center;
+}
+
+.copyright {
+  font-family: var(--font-tt-drugs), sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  text-align: center;
+}

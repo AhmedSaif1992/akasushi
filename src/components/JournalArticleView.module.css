@@ -1,0 +1,191 @@
+.articlePage {
+  background-color: #000000;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 6.25rem;
+  padding-bottom: 4.5rem;
+  position: relative;
+}
+
+.inner {
+  width: 100%;
+  max-width: 72.5rem;
+  margin-inline: auto;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 1.5rem;
+  display: flex;
+}
+
+.header {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 48rem;
+  display: flex;
+}
+
+.meta {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  display: flex;
+}
+
+.tag {
+  background-color: #ffffff;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-synthesis: none;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000000;
+  border-radius: 999px;
+  justify-content: center;
+  align-items: center;
+  padding: 0.375rem 0.9375rem;
+  display: inline-flex;
+}
+
+.date {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: #ffffffb8;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.title {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  color: #ffffff;
+  text-wrap: balance;
+  margin: 1.25rem 0 0;
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 115%;
+}
+
+.intro {
+  max-width: 42rem;
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: #ffffff;
+  text-wrap: pretty;
+  margin: 1.25rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 145%;
+}
+
+.media {
+  aspect-ratio: 16 / 9;
+  background-color: #141414;
+  border-radius: 0.875rem;
+  width: 100%;
+  max-width: 62.5rem;
+  margin-top: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.body {
+  text-align: center;
+  width: 100%;
+  max-width: 44rem;
+  margin-top: 2rem;
+}
+
+.body p {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: #ffffff;
+  text-wrap: pretty;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 155%;
+}
+
+.body p + p {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 64rem) {
+  .articlePage {
+    padding-top: clamp(7.5rem, 11vw, 9.5rem);
+    padding-bottom: 6rem;
+  }
+
+  .inner {
+    padding-inline: 2.5rem;
+  }
+
+  .header {
+    max-width: 52rem;
+  }
+
+  .tag {
+    padding: 0.4375rem 1.0625rem;
+    font-size: 0.8125rem;
+  }
+
+  .date {
+    font-size: 0.9375rem;
+  }
+
+  .title {
+    max-width: 18ch;
+    margin-top: 1.5rem;
+    font-size: 2.75rem;
+    line-height: 110%;
+  }
+
+  .intro {
+    max-width: 40rem;
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 150%;
+  }
+
+  .media {
+    aspect-ratio: 1100 / 520;
+    border-radius: 1rem;
+    max-width: 68.75rem;
+    margin-top: 2.75rem;
+  }
+
+  .body {
+    max-width: 46rem;
+    margin-top: 2.75rem;
+  }
+
+  .body p {
+    font-size: 1.0625rem;
+    line-height: 160%;
+  }
+
+  .body p + p {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .inner {
+    padding-inline: 3rem;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .media {
+    max-width: 72.5rem;
+  }
+}

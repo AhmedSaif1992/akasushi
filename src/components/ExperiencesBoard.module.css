@@ -1,0 +1,439 @@
+.experiencesBoard {
+  background-color: #000000;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 6.25rem;
+  padding-bottom: 4.5rem;
+  position: relative;
+}
+
+.inner {
+  width: 100%;
+  max-width: 72.5rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+.intro {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.75rem;
+  display: flex;
+}
+
+.title {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  letter-spacing: 0;
+  color: #ffffff;
+  margin: 0;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+.subtitle {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.625rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.body {
+  flex-direction: column;
+  gap: 1.25rem;
+  display: flex;
+}
+
+.card {
+  background-color: #111111;
+  border-radius: 0.625rem;
+  flex-direction: row;
+  align-items: stretch;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Featured Card */
+.featuredCard {
+  background: #111111;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  width: 100%;
+  margin-inline: auto;
+  padding: 0;
+  display: grid;
+}
+
+.featuredMedia {
+  aspect-ratio: auto;
+  background-color: #0a0a0a;
+  flex: none;
+  align-self: stretch;
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.featuredPoster {
+
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.featuredCopy {
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-width: 0;
+  height: 100%;
+  padding: 1.25rem 1.25rem 1.25rem 1.125rem;
+  display: flex;
+}
+
+.featuredTitle {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  letter-spacing: 0;
+  color: #ffffff;
+  text-wrap: balance;
+
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%;
+
+
+}
+
+.featuredDesc {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 140%;
+  display: block;
+  overflow: visible;
+}
+
+.bookBtn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+/* Regular Cards */
+.cardMedia {
+  aspect-ratio: 156 / 195;
+  background-color: #0a0a0a;
+  flex: none;
+  align-self: stretch;
+  width: 9.75rem;
+  height: auto;
+  position: relative;
+}
+
+.cardImage {
+  object-fit: contain;
+  object-position: center;
+}
+
+.cardCopy {
+  flex-direction: column;
+  flex: auto;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.875rem 0.875rem 0.875rem 0.75rem;
+  display: flex;
+
+}
+
+.cardDate {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: #ffffff8c;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 130%;
+  display: block;
+}
+
+.cardCopyMain {
+  flex-direction: column;
+  flex: auto;
+  gap: 0.4rem;
+  display: flex;
+
+}
+
+.cardTitle {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  letter-spacing: 0;
+  color: #ffffff;
+  text-wrap: balance;
+  margin: 0;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 115%;
+}
+
+.cardDesc {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+
+  -webkit-box-orient: vertical;
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 135%;
+  display: -webkit-box;
+  overflow: hidden;
+
+  margin-top: .3rem;
+}
+
+.detailsBtn {
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #ffffff;
+  align-self: flex-start;
+  margin-top: auto;
+  font-size: 0.6875rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 130%;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.detailsBtn:hover,
+.detailsBtn:focus-visible {
+  opacity: 0.75;
+  outline: none;
+}
+
+.grid {
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  display: grid;
+}
+
+/* Pagination */
+.pagination {
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  display: flex;
+}
+
+.paginationBtn {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: #ffffff;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  background-color: #1a1a1a;
+  border: none;
+  border-radius: 0.25rem;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.15s, color 0.15s;
+  display: inline-flex;
+}
+
+.paginationBtn.isActive {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.paginationBtn:not(.isActive):hover,
+.paginationBtn:not(.isActive):focus-visible {
+  background-color: #2a2a2a;
+  outline: none;
+}
+
+@media (max-width: 47.9375rem) {
+  .featuredCard {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredMedia {
+    max-width: 23.25rem;
+    margin-inline: auto;
+  }
+
+  .featuredCopy {
+    padding: 1.125rem 1.125rem 1.25rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .experiencesBoard {
+    padding-top: clamp(7.5rem, 11vw, 9.5rem);
+    padding-bottom: 6rem;
+  }
+
+  .inner {
+    padding-inline: 2.5rem;
+  }
+
+  .intro {
+    margin-bottom: 2.5rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  }
+
+  .subtitle {
+    margin-top: 0.75rem;
+    font-size: 1.125rem;
+  }
+
+  .body {
+    gap: 1.5rem;
+  }
+
+  .featuredCopy {
+    padding: 2rem 2.5rem 2rem 2rem;
+  }
+
+  .featuredCard .cardDate {
+    font-size: 0.875rem;
+  }
+
+  .featuredTitle {
+    font-size: 2rem;
+  }
+
+  .featuredDesc {
+    max-width: 28rem;
+    font-size: 1rem;
+    line-height: 140%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .grid .card {
+    grid-template-rows: 18.75rem;
+    grid-template-columns: 15rem minmax(0, 1fr);
+    height: 18.75rem;
+    min-height: 18.75rem;
+    display: grid;
+  }
+
+  .grid .cardMedia {
+    aspect-ratio: 4 / 5;
+    flex: none;
+    width: 15rem;
+    height: 18.75rem;
+  }
+
+  .grid .cardCopy {
+    height: 100%;
+    padding: 1.25rem 1.25rem 1.125rem;
+  }
+
+  .grid .cardTitle {
+    font-size: 1.375rem;
+  }
+
+  .grid .cardDesc {
+    font-size: 0.8125rem;
+  }
+
+  .detailsBtn {
+    font-size: 0.75rem;
+  }
+
+  .paginationBtn {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .inner {
+    padding-inline: 3rem;
+  }
+
+  .intro {
+    margin-bottom: 2.75rem;
+  }
+
+  .body {
+    gap: 1.5rem;
+  }
+
+  .featuredCopy {
+    padding: 2.5rem 3rem 2.5rem 2.5rem;
+  }
+
+  .featuredTitle {
+    font-size: 2.25rem;
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .grid .cardCopy {
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .grid .cardTitle {
+    font-size: 1.5rem;
+  }
+}
+
+
+@media (min-width: 64rem) {
+  .inner {
+    padding-inline: 3rem;
+  }
+
+  .intro {
+    margin-bottom: 2.75rem;
+  }
+
+  .body {
+    gap: 1.5rem;
+  }
+
+  .featuredCopy {
+    padding: 2.5rem 3rem 2.5rem 2.5rem;
+  }
+
+  .featuredTitle {
+    font-size: 2.25rem;
+  }
+
+  .grid {
+    gap: 1.5rem;
+  }
+
+  .grid .cardCopy {
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+
+  .grid .cardTitle {
+    font-size: 1.5rem;
+  }
+}

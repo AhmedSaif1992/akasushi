@@ -1,0 +1,111 @@
+.loaderOverlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: #050202;
+  z-index: 1;
+}
+
+/* Doors Container & Panels */
+.doorsContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.leftDoor,
+.rightDoor {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  will-change: transform;
+  background-color: #090404;
+}
+
+.leftDoor {
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.85);
+}
+
+.rightDoor {
+  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.85);
+}
+
+.doorImageLeft {
+  object-fit: cover;
+  object-position: right center;
+}
+
+.doorImageRight {
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* Centered SVG Emblem */
+.svgWrapper {
+  position: relative;
+  z-index: 3;
+  width: 10.2vw;
+  aspect-ratio: 280 / 652;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 28px rgba(239, 117, 35, 0.28));
+}
+
+.loadingSvgBase,
+.svgFillWrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.svgFillWrapper {
+  clip-path: inset(100% 0% 0% 0%);
+  -webkit-clip-path: inset(100% 0% 0% 0%);
+  will-change: clip-path;
+}
+
+.loadingSvgFill {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .svgWrapper {
+    width: auto;
+    height: 25.6vh;
+  }
+
+  .doorImageLeft {
+    object-fit: cover;
+
+  }
+
+  .doorImageRight {
+    object-fit: cover;
+
+  }
+}

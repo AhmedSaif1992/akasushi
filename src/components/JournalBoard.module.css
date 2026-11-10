@@ -1,0 +1,503 @@
+.journal {
+  background-color: #000000;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 6.25rem;
+  padding-bottom: 4.5rem;
+  position: relative;
+}
+
+.header,
+.list {
+  width: 100%;
+  max-width: 72.5rem;
+  margin-inline: auto;
+}
+
+.header {
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-inline: 1.5rem;
+  display: flex;
+}
+
+.title {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  color: #ffffff;
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+.subtitle {
+  font-family: var(--font-tt-drugs), sans-serif;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.875rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.list {
+  flex-direction: column;
+  gap: 2rem;
+  padding-inline: 1.5rem;
+  display: flex;
+}
+
+.coverImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.postTitle {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  letter-spacing: 0;
+  color: #ffffff;
+  text-wrap: balance;
+  margin: 0;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+.postExcerpt {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.75rem 0 0;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.postMeta {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: flex;
+}
+
+.postDate {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: #ffffff8c;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+/* Featured Article */
+.featured {
+  color: inherit;
+  background-color: #111111;
+  border-radius: 0.625rem;
+  grid-template-columns: 1fr;
+  text-decoration: none;
+  transition: opacity 0.18s;
+  display: grid;
+  overflow: hidden;
+}
+
+.featured:hover,
+.featured:focus-visible {
+  opacity: 0.92;
+  outline: none;
+}
+
+.featuredMedia {
+  aspect-ratio: 1;
+  background-color: #0a0a0a;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.featuredCopy {
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 1.5rem 1.25rem 1.25rem;
+  display: flex;
+}
+
+.featured .postTitle {
+  color: #ffffff;
+  text-wrap: balance;
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  text-transform: capitalize;
+  max-width: none;
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+.featured .postExcerpt {
+  color: #ffffffb3;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  max-width: none;
+  margin: 0;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.featured .postMeta {
+  margin-top: auto;
+  padding-top: 1.875rem;
+}
+
+.featured .postDate {
+  color: #ffffffb3;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+/* 2-Column Boxes */
+.boxes {
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  display: grid;
+}
+
+.box {
+  color: inherit;
+  background-color: #111111;
+  border-radius: 0.625rem;
+  flex-direction: column;
+  text-decoration: none;
+  transition: opacity 0.18s;
+  display: flex;
+  overflow: hidden;
+}
+
+.box:hover,
+.box:focus-visible {
+  opacity: 0.92;
+  outline: none;
+}
+
+.boxMedia {
+  aspect-ratio: 1;
+  background-color: #0a0a0a;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.boxCopy {
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-start;
+  padding: 1.375rem 1.25rem 1.25rem;
+  display: flex;
+}
+
+.box .postTitle {
+  color: #ffffff;
+  text-wrap: balance;
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  text-transform: capitalize;
+  max-width: none;
+  margin: 0 0 1.25rem;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 110%;
+}
+
+.box .postExcerpt {
+  color: #ffffffb3;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  max-width: none;
+  margin: 0;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+.box .postMeta {
+  margin-top: auto;
+  padding-top: 1.875rem;
+}
+
+.box .postDate {
+  color: #ffffffb3;
+  font-family: var(--font-tt-drugs), ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+}
+
+/* Horizontal Cards */
+.cards {
+  flex-direction: column;
+  gap: 2rem;
+  display: flex;
+}
+
+.card {
+  color: inherit;
+  background-color: #111111;
+  border-radius: 0.625rem;
+  grid-template-columns: 1fr;
+  text-decoration: none;
+  transition: opacity 0.18s;
+  display: grid;
+  overflow: hidden;
+}
+
+.card:hover,
+.card:focus-visible {
+  opacity: 0.92;
+  outline: none;
+}
+
+.cardMedia {
+  aspect-ratio: 1;
+  background-color: #0a0a0a;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cardCopy {
+  flex-direction: column;
+  padding: 1.375rem 1.25rem 1.25rem;
+  display: flex;
+}
+
+@media (min-width: 48rem) {
+  .journal {
+    padding-top: clamp(7.5rem, 11vw, 9.5rem);
+    padding-bottom: 5.5rem;
+  }
+
+  .header {
+    margin-bottom: 2.75rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  }
+
+  .subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 1rem;
+    font-size: 1.125rem;
+  }
+
+  .list {
+    gap: 2rem;
+    padding-inline: 2.5rem;
+  }
+
+  .postTitle {
+    font-size: 2rem;
+  }
+
+  .postExcerpt {
+    max-width: 46ch;
+    margin-top: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .postMeta {
+    padding-top: 1.75rem;
+  }
+
+  .postDate {
+    font-size: 0.875rem;
+  }
+
+  .featured {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .featuredMedia {
+    aspect-ratio: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .featuredCopy {
+    justify-content: flex-start;
+    padding: 3.75rem 1.875rem 1.875rem 3.75rem;
+  }
+
+  .featured .postTitle {
+    text-transform: capitalize;
+    margin: 0 0 1.875rem;
+    font-size: 2rem;
+    line-height: 110%;
+  }
+
+  .featured .postExcerpt {
+    max-width: none;
+    margin: 0;
+    font-size: 1.1875rem;
+    line-height: 130%;
+  }
+
+  .featured .postMeta {
+    margin-top: auto;
+    padding-top: 1.875rem;
+  }
+
+  .featured .postDate {
+    font-size: 0.875rem;
+    line-height: 130%;
+  }
+
+  .boxes {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .boxMedia {
+    aspect-ratio: auto;
+    height: 22.6875rem;
+    min-height: 22.6875rem;
+  }
+
+  .boxCopy {
+    min-height: 0;
+    padding: 2.5rem 1.875rem 1.875rem 2.5rem;
+  }
+
+  .box .postTitle {
+    text-transform: capitalize;
+    max-width: none;
+    margin: 0 0 1.875rem;
+    font-size: 2rem;
+    line-height: 110%;
+  }
+
+  .box .postExcerpt {
+    max-width: none;
+    margin: 0;
+    font-size: 1.1875rem;
+    line-height: 130%;
+  }
+
+  .box .postMeta {
+    margin-top: auto;
+    padding-top: 1.875rem;
+  }
+
+  .box .postDate {
+    font-size: 0.875rem;
+    line-height: 130%;
+  }
+
+  .card {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 15rem;
+  }
+
+  .cardMedia {
+    aspect-ratio: 1;
+    width: 15rem;
+    height: 15rem;
+    min-height: 15rem;
+  }
+
+  .cardCopy {
+    justify-content: space-between;
+    padding: 1.75rem 2rem 1.5rem;
+  }
+
+  .card .postTitle {
+    max-width: none;
+    font-size: 2rem;
+    line-height: 110%;
+  }
+
+  .card .postExcerpt {
+    max-width: 48ch;
+  }
+}
+
+@media (min-width: 64rem) {
+  .journal {
+    padding-bottom: 6rem;
+  }
+
+  .header {
+    margin-bottom: 3.25rem;
+  }
+
+  .list {
+    padding-inline: 2.5rem;
+  }
+
+  .featuredCopy {
+    padding: 3.75rem 1.875rem 1.875rem 3.75rem;
+  }
+
+  .featured .postTitle {
+    font-size: 2rem;
+    line-height: 110%;
+  }
+
+  .boxCopy {
+    min-height: 0;
+    padding: 2.5rem 1.875rem 1.875rem 2.5rem;
+  }
+
+  .box .postTitle {
+    font-size: 2rem;
+    line-height: 110%;
+  }
+
+  .card {
+    grid-template-columns: 17.5rem minmax(0, 1fr);
+    min-height: 17.5rem;
+  }
+
+  .cardMedia {
+    width: 17.5rem;
+    height: 17.5rem;
+    min-height: 17.5rem;
+  }
+
+  .cardCopy {
+    padding: 2rem 2.25rem 1.75rem;
+  }
+
+  .card .postTitle {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .list {
+    padding-inline: 3rem;
+  }
+
+  .card {
+    grid-template-columns: 19rem minmax(0, 1fr);
+    min-height: 19rem;
+  }
+
+  .cardMedia {
+    width: 19rem;
+    height: 19rem;
+    min-height: 19rem;
+  }
+}

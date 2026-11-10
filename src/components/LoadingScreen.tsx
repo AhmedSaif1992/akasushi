@@ -1,0 +1,395 @@
+"use client";
+
+import { useRef, useState } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import styles from "./LoadingScreen.module.css";
+
+gsap.registerPlugin(useGSAP);
+
+const MIN_LOADING_TIME_MS = 700; // 0.7s minimum loading duration
+const MAX_WAIT_TIME_MS = 3000; // Safety cap so slow networks never hang
+
+const CRITICAL_IMAGES = [
+  "/loading-images/left-door.webp",
+  "/loading-images/right-door.webp",
+  "/kimono-lady-herosection.webp",
+];
+
+const SVG_PATH_LEFT =
+  "M140.061 496.499C138.582 519.407 135.309 542.278 127.083 563.775C122.429 576.406 118.04 589.253 110.101 600.298C104.727 608.516 98.5081 616.165 91.9782 623.606C87.986 628.06 84.3492 632.837 79.8257 636.752C76.1317 640.062 70.9994 639.584 71.6654 633.63C73.5574 625.359 78.894 618.196 82.5798 610.637C98.0504 580.46 112.377 547.921 112.63 513.42C112.385 503.029 113.783 490.811 107.388 481.977C100.163 474.106 94.3319 482.679 90.7605 489.029C85.1542 497.978 79.9442 507.074 71.9188 514.013C55.3081 527.542 33.7817 525.924 19.2305 510.16C8.53271 498.689 3.90707 483.08 3.70684 467.605C2.70162 459.049 2.75883 450.39 3.90298 441.854C4.8796 428.729 8.21807 415.677 13.898 403.847C17.6042 397.093 22.3361 390.808 27.6482 385.202C32.7029 380.18 38.9304 376.645 44.7656 372.681C77.9664 352.663 98.3773 342.929 102.333 300.048C102.705 288.043 102.173 275.351 97.5233 264.122C94.2175 256.333 88.2434 247.585 78.8246 247.699C73.68 247.613 70.46 250.878 66.7864 253.694C62.4346 256.95 56.771 259.749 51.2995 257.71C36.8055 251.924 29.5443 230.557 27.5502 216.202C25.5234 201.769 25.2251 186.548 26.8759 172.083C28.5595 161.181 31.3545 150.479 33.8961 139.736C39.3063 120.751 44.5 101.648 49.8938 82.6712C52.9749 71.9611 56.8364 61.5861 57.8866 50.3857C59.8561 39.9534 60.4527 29.1126 61.1433 18.5782C61.4048 16.5351 62.7288 14.0425 64.6738 13.736C66.1449 13.36 67.8611 13.6093 69.1728 14.447C75.7108 18.3616 76.287 44.1378 76.0377 51.8322C74.8772 73.2279 68.1594 93.7082 64.3755 114.699C60.2852 134.538 56.2398 154.287 55.7372 174.637C55.3858 181.783 54.2539 189.466 55.1651 196.645C55.9783 205.1 58.2175 214.894 68.4291 208.524C79.7317 201.197 90.6216 199.967 101.618 208.732C123.524 227.415 136.392 266.614 135.109 294.957C135.738 313.643 132.73 332.244 124.399 348.993C119.642 359.801 113.378 370.009 104.662 378.1C94.2829 387.907 81.1701 393.521 68.8582 400.292C60.8082 404.865 52.5949 409.306 46.4982 416.453C39.3145 424.855 35.9638 435.994 35.3508 446.9C34.3906 455.669 34.5744 464.741 37.8761 472.913C46.347 490.284 60.3383 481.086 68.8541 469.252C77.2268 458.91 83.3726 445.968 94.7651 438.515C107.236 430.886 121.183 437.571 129.437 448.057C138.982 461.566 140.503 480.305 140.065 496.422V496.503L140.061 496.499Z";
+
+const SVG_PATH_RIGHT =
+  "M265.44 366.09C266.805 381.936 264.946 398.31 259.327 413.212C255.196 424.666 247.894 433.272 235.034 434.281C225.906 435.344 216.617 432.827 209.307 427.29C203.811 423.575 198.617 419.342 194.776 413.866C191.863 409.87 189.052 405.555 186.596 401.346C183.87 397.734 178.57 381.094 172.494 388.025C170.136 391.098 169.491 395.102 168.547 398.813C166.414 408.436 166.426 418.782 167.778 428.581C169.969 439.704 173.994 450.377 177.9 460.965C184.577 479.034 192.966 496.376 203.129 512.68C206.414 518.001 205.082 526.761 197.003 521.788C193.162 519.1 189.959 515.447 186.796 511.961C181.427 505.864 176.74 499.808 172.294 493.168C151.062 460.895 135.227 420.433 146.914 381.805C148.769 376.142 150.379 370.245 154.175 365.514C157.04 362.04 160.644 358.759 164.955 357.206C170.104 355.604 176.388 355.445 181.57 357.325C188.888 360.696 194.511 366.633 199.774 372.689C206.377 379.211 217.067 399.176 227.07 396.357C234.724 393.525 235.263 382.12 235.292 375.002C235.463 368.145 234.54 361.583 231.491 355.519C228.619 348.833 224.524 342.512 218.612 338.074C215.208 335.365 211.289 333.62 207.468 331.692C201.408 328.594 195.332 325.791 189.472 322.354C182.285 318.056 175.591 312.625 170.512 305.944C148.021 276.686 141.839 231.043 157.044 197.241C162.711 184.983 173.601 170.722 188.79 173.508C193.346 174.317 198.266 176.087 202.863 175.114C213.871 172.356 212.919 158.442 212.854 149.301C212.621 137.807 209.054 126.876 206.929 115.635C203.787 102.027 200.088 88.5264 197.232 74.8579C195.267 65.5085 193.444 56.2531 193.436 46.6381C193.375 36.8924 193.269 27.7719 196.223 18.6146C197.886 13.2575 203.999 9.87406 206.79 17.2988C208.392 21.7896 208.465 27.0037 209.213 31.7437C210.21 39.6997 211.211 47.672 212.731 55.4767C215.036 67.6007 219.016 79.1689 222.918 90.8637C227.638 104.802 233.155 118.769 236.46 133.185C238.05 140.761 239.427 148.19 240.085 155.921C240.592 162.974 240.33 170.235 240.42 177.276C240.293 189.322 237.719 205.279 227.511 212.969C213.679 223.205 201.854 204.968 189.575 211.519C185.742 213.885 184.422 218.527 183.041 222.552C180.405 230.311 180.037 238.472 180.213 246.616C179.731 257.677 182.293 269.008 189.199 277.81C200.215 291.417 216.891 298.217 230.899 308.081C240.886 315.498 249.021 325.272 255.388 335.9C261.141 344.878 264.055 355.543 265.432 366.037L265.44 366.106V366.09Z";
+
+interface LoadingScreenProps {
+  onDoorsOpen?: () => void;
+}
+
+export default function LoadingScreen({ onDoorsOpen }: LoadingScreenProps) {
+  const [isComplete, setIsComplete] = useState(false);
+
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const doorsContainerRef = useRef<HTMLDivElement>(null);
+  const leftDoorRef = useRef<HTMLDivElement>(null);
+  const rightDoorRef = useRef<HTMLDivElement>(null);
+  const svgWrapperRef = useRef<HTMLDivElement>(null);
+  const svgFillWrapperRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+
+      const preventScroll = (e: Event) => {
+        e.preventDefault();
+      };
+      window.addEventListener("wheel", preventScroll, { passive: false });
+      window.addEventListener("touchmove", preventScroll, { passive: false });
+
+      const unlockScroll = () => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        window.removeEventListener("wheel", preventScroll);
+        window.removeEventListener("touchmove", preventScroll);
+      };
+
+      // Initial states
+      gsap.set(svgFillWrapperRef.current, {
+        clipPath: "inset(100% 0% 0% 0%)",
+      });
+      gsap.set(doorsContainerRef.current, {
+        autoAlpha: 0,
+      });
+      gsap.set([leftDoorRef.current, rightDoorRef.current], {
+        xPercent: 0,
+      });
+
+      const progressState = { value: 0 };
+      let hasStartedDoorReveal = false;
+      let isCleanedUp = false;
+
+      const setFillPercent = (progress0to1: number) => {
+        if (!svgFillWrapperRef.current) return;
+        const insetTop = Math.max(0, 100 - progress0to1 * 100);
+        const clipVal = `inset(${insetTop.toFixed(2)}% 0% 0% 0%)`;
+        svgFillWrapperRef.current.style.clipPath = clipVal;
+        svgFillWrapperRef.current.style.setProperty(
+          "-webkit-clip-path",
+          clipVal
+        );
+      };
+
+      const playDoorReveal = () => {
+        if (hasStartedDoorReveal || isCleanedUp) return;
+        hasStartedDoorReveal = true;
+
+        const revealTl = gsap.timeline({
+          onComplete: () => {
+            unlockScroll();
+            window.scrollTo(0, 0);
+            window.dispatchEvent(new CustomEvent("aka:loading-complete"));
+            setIsComplete(true);
+          },
+        });
+
+        // Complete the SVG fill to 100%, then fade out SVG & fade in closed doors
+        revealTl
+          .to(progressState, {
+            value: 1,
+            duration: 0.25,
+            ease: "power2.out",
+            overwrite: true,
+            onUpdate: () => setFillPercent(progressState.value),
+          })
+          .to(
+            svgWrapperRef.current,
+            {
+              autoAlpha: 0,
+              scale: 1.0,
+              duration: 0.5,
+              ease: "power2.out",
+            },
+            "+=0.08"
+          )
+          .to(
+            doorsContainerRef.current,
+            {
+              autoAlpha: 1,
+              duration: 0.65,
+              ease: "power2.out",
+            },
+            "<0.08"
+          )
+          // Hide solid backdrop & disable overlay pointer blocking right before doors part
+          .set(backdropRef.current, { autoAlpha: 0 }, "+=0.15")
+          .set(overlayRef.current, { pointerEvents: "none" }, "<")
+          .call(
+            () => {
+              onDoorsOpen?.();
+              window.dispatchEvent(new CustomEvent("aka:doors-open"));
+            },
+            [],
+            "<"
+          )
+          // Slide left and right doors open to reveal the website & start opening video
+          .to(
+            leftDoorRef.current,
+            {
+              xPercent: -100,
+              duration: 1.4,
+              ease: "expo.inOut",
+            },
+            "<"
+          )
+          .to(
+            rightDoorRef.current,
+            {
+              xPercent: 100,
+              duration: 1.4,
+              ease: "expo.inOut",
+            },
+            "<"
+          )
+          // Doors are (almost) fully open — signal hero content to reveal
+          .call(
+            () => {
+              window.dispatchEvent(new CustomEvent("aka:doors-opened"));
+            },
+            [],
+            "-=0.3"
+          );
+      };
+
+      // Total real tasks = 3 critical images + fonts
+      const totalTasks = CRITICAL_IMAGES.length + 1;
+      let completedTasks = 0;
+      let minTimeDone = false;
+      let allAssetsDone = false;
+
+      const checkReadyToOpen = () => {
+        if (isCleanedUp || hasStartedDoorReveal) return;
+        if (allAssetsDone && minTimeDone) {
+          playDoorReveal();
+        }
+      };
+
+      // Smoothly animate baseline fill up to 85% over the 0.7s minimum loading time
+      gsap.to(progressState, {
+        value: 0.85,
+        duration: MIN_LOADING_TIME_MS / 1000,
+        ease: "power1.inOut",
+        onUpdate: () => setFillPercent(progressState.value),
+      });
+
+      const markTaskDone = () => {
+        if (isCleanedUp || hasStartedDoorReveal) return;
+        completedTasks += 1;
+
+        // If minimum 0.7s has already passed while still waiting on assets, advance fill up to 95%
+        if (minTimeDone && completedTasks < totalTasks) {
+          const ratio = completedTasks / totalTasks;
+          gsap.to(progressState, {
+            value: Math.max(progressState.value, 0.85 + ratio * 0.1),
+            duration: 0.2,
+            overwrite: true,
+            onUpdate: () => setFillPercent(progressState.value),
+          });
+        }
+
+        if (completedTasks >= totalTasks) {
+          allAssetsDone = true;
+          checkReadyToOpen();
+        }
+      };
+
+      // 1. Preload critical images reliably in Safari & Chrome
+      CRITICAL_IMAGES.forEach((src) => {
+        const img = new window.Image();
+        img.onload = markTaskDone;
+        img.onerror = markTaskDone;
+        img.src = src;
+      });
+
+      // 2. Wait for web fonts
+      if (typeof document !== "undefined" && "fonts" in document) {
+        document.fonts.ready.then(markTaskDone).catch(markTaskDone);
+      } else {
+        markTaskDone();
+      }
+
+      // 3. Enforce 0.7s (700ms) minimum loading duration
+      const minTimer = setTimeout(() => {
+        minTimeDone = true;
+        checkReadyToOpen();
+      }, MIN_LOADING_TIME_MS);
+
+      // 4. Safety cap so slow connections never get stuck
+      const maxTimer = setTimeout(() => {
+        minTimeDone = true;
+        allAssetsDone = true;
+        checkReadyToOpen();
+      }, MAX_WAIT_TIME_MS);
+
+      return () => {
+        isCleanedUp = true;
+        clearTimeout(minTimer);
+        clearTimeout(maxTimer);
+        unlockScroll();
+      };
+    },
+    { scope: overlayRef }
+  );
+
+  if (isComplete) {
+    return null;
+  }
+
+  return (
+    <div
+      ref={overlayRef}
+      className={styles.loaderOverlay}
+      aria-label="Loading AKA Sushi"
+      role="status"
+    >
+      {/* Solid dark backdrop during SVG fill & door fade-in */}
+      <div ref={backdropRef} className={styles.backdrop} />
+
+      {/* Doors Container */}
+      <div ref={doorsContainerRef} className={styles.doorsContainer}>
+        <div ref={leftDoorRef} className={styles.leftDoor}>
+          <Image
+            src="/loading-images/left-door.webp"
+            alt="Left Entrance Door"
+            fill
+            priority
+            quality={95}
+            sizes="50vw"
+            className={styles.doorImageLeft}
+          />
+        </div>
+        <div ref={rightDoorRef} className={styles.rightDoor}>
+          <Image
+            src="/loading-images/right-door.webp"
+            alt="Right Entrance Door"
+            fill
+            priority
+            quality={95}
+            sizes="50vw"
+            className={styles.doorImageRight}
+          />
+        </div>
+      </div>
+
+      {/* Centered SVG Emblem Filling Up */}
+      <div ref={svgWrapperRef} className={styles.svgWrapper}>
+        {/* Base Unfilled / Muted Outline SVG */}
+        <svg
+          viewBox="0 0 280 652"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={styles.loadingSvgBase}
+          aria-hidden="true"
+        >
+          <defs>
+            <path id="aka_base_left" d={SVG_PATH_LEFT} />
+            <path id="aka_base_right" d={SVG_PATH_RIGHT} />
+            <mask id="aka_base_mask_left" fill="white">
+              <use href="#aka_base_left" />
+            </mask>
+            <mask id="aka_base_mask_right" fill="white">
+              <use href="#aka_base_right" />
+            </mask>
+          </defs>
+          <use href="#aka_base_left" fill="#EF7523" fillOpacity="0.1" />
+          <path
+            d={SVG_PATH_LEFT}
+            stroke="#FFBA72"
+            strokeWidth="8"
+            strokeOpacity="0.22"
+            mask="url(#aka_base_mask_left)"
+          />
+          <use href="#aka_base_right" fill="#EF7523" fillOpacity="0.1" />
+          <path
+            d={SVG_PATH_RIGHT}
+            stroke="#FFBA72"
+            strokeWidth="8"
+            strokeOpacity="0.22"
+            mask="url(#aka_base_mask_right)"
+          />
+        </svg>
+
+        {/* HTML div wrapper for cross-browser (Safari/Chrome) clip-path animation */}
+        <div ref={svgFillWrapperRef} className={styles.svgFillWrapper}>
+          <svg
+            viewBox="0 0 280 652"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.loadingSvgFill}
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient
+                id="aka_paint0"
+                x1="-35.0189"
+                y1="30.7321"
+                x2="166.367"
+                y2="638.797"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#EF7523" />
+                <stop offset="0.274038" stopColor="#F89E4D" />
+                <stop offset="0.543269" stopColor="#FCB05F" />
+                <stop offset="1" stopColor="#EF7523" />
+              </linearGradient>
+              <linearGradient
+                id="aka_paint1"
+                x1="88.1976"
+                y1="-26.2394"
+                x2="243.212"
+                y2="580.569"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stopColor="#EF7523" />
+                <stop offset="0.278846" stopColor="#F89E4D" />
+                <stop offset="0.543269" stopColor="#FCB05F" />
+                <stop offset="1" stopColor="#EF7523" />
+              </linearGradient>
+              <path id="aka_fill_left" d={SVG_PATH_LEFT} />
+              <path id="aka_fill_right" d={SVG_PATH_RIGHT} />
+              <mask id="aka_fill_mask_left" fill="white">
+                <use href="#aka_fill_left" />
+              </mask>
+              <mask id="aka_fill_mask_right" fill="white">
+                <use href="#aka_fill_right" />
+              </mask>
+            </defs>
+            <use href="#aka_fill_left" fill="url(#aka_paint0)" />
+            <path
+              d={SVG_PATH_LEFT}
+              stroke="#FFBA72"
+              strokeWidth="8"
+              strokeOpacity="0.75"
+              mask="url(#aka_fill_mask_left)"
+            />
+            <use href="#aka_fill_right" fill="url(#aka_paint1)" />
+            <path
+              d={SVG_PATH_RIGHT}
+              stroke="#FFBA72"
+              strokeWidth="8"
+              strokeOpacity="0.75"
+              mask="url(#aka_fill_mask_right)"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}

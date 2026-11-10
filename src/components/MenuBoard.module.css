@@ -1,0 +1,411 @@
+.menuBoard {
+
+  width: 100%;
+  min-height: 100vh;
+  padding-top: clamp(7.5rem, 11vw, 9.5rem);
+  padding-bottom: 6rem;
+  position: relative;
+  overflow: visible;
+
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 2.75rem;
+  padding: 0 1.5rem;
+}
+
+.title {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  color: #ffffff;
+  font-size: clamp(2.5rem, 5.5vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  text-align: center;
+}
+
+/* Sticky Category Filter Tabs */
+.filtersWrapper {
+  position: sticky;
+  top: var(--navbar-height, 7.4rem);
+  z-index: 30;
+  width: 100%;
+  margin-bottom: 3.5rem;
+}
+
+.filtersWrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.filtersWrapper.isStuck::before {
+  opacity: 1;
+}
+
+.filtersInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.875rem 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+.filtersDesktop {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.25rem;
+  list-style: none;
+  padding: 0 2rem;
+  margin: 0;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.filtersDesktop::-webkit-scrollbar {
+  display: none;
+}
+
+.filtersDesktop.isDragging {
+  cursor: grabbing;
+}
+
+.filterBtn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-tt-drugs), sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0 0.5rem;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.filtersDesktop.isDragging .filterBtn {
+  cursor: grabbing;
+}
+
+.filterBtn:hover {
+  color: var(--gold);
+}
+
+.filterBtn.isActive {
+  color: var(--gold);
+}
+
+.filterBtn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 100%;
+  height: 2px;
+  background-color: var(--gold);
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.filterBtn.isActive::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Menu Content Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5.5rem;
+}
+
+/* Visual Hero Banner */
+.visualHero {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+}
+
+.visualMedia {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1000 / 420;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #1a1a1a;
+}
+
+.visualMedia img {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Category Article */
+.category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  transition: opacity 0.3s ease;
+  margin-bottom: 5rem;
+
+}
+
+.categoryHeading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.categoryTitle {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  color: #ffffff;
+  font-size: 2.9rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0;
+  text-align: center;
+}
+
+.categorySubtitle {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Dish Grid: Desktop (2-col) */
+.dishGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5.5rem;
+  row-gap: 0;
+  width: 100%;
+  max-width: 64rem;
+  margin: 1.5rem auto 0;
+  padding: 0;
+  list-style: none;
+
+
+}
+
+/* Group Header spanning both columns */
+.groupHeader {
+  grid-column: 1 / -1;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.2;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(206, 156, 109, 0.35);
+
+  margin: 5rem 0 3rem;
+
+}
+
+/* Individual Dish: Desktop & Base */
+.dish {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 2.5rem 0;
+}
+
+.dishTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.8rem;
+  width: 100%;
+}
+
+.dishName {
+  font-family: var(--font-ivy-presto), Georgia, serif;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 1.1;
+  margin: 0;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+
+.dishPrice {
+  font-family: var(--font-ivy-presto), Georgia, serif;
+  color: var(--red);
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 1.1;
+  margin: 0;
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dishDesc {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 0.4rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  text-align: left;
+  margin-top: 0.8rem;
+}
+
+.dishMeta {
+  font-family: var(--font-tt-drugs), sans-serif;
+  color: rgba(255, 255, 255, 0.45);
+
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+@media (max-width: 767.98px) {
+  .menuBoard {
+    padding-top: 6.25rem;
+    padding-bottom: 5rem;
+
+  }
+
+  .intro {
+    margin-bottom: 1.5rem;
+  }
+
+  .filtersWrapper {
+    margin-bottom: 2rem;
+  }
+
+  .filtersInner {
+
+    padding: 1rem 0;
+  }
+
+  .filtersDesktop {
+    gap: 0.65rem 1.25rem;
+    gap: 1.5rem;
+    padding: 0 1.25rem;
+  }
+
+
+
+  .container {
+
+    gap: 4rem;
+    padding: 0;
+  }
+
+  .visualHero {
+    margin-bottom: 0.5rem;
+  }
+
+  .visualMedia {
+    height: 12.5rem;
+    aspect-ratio: auto;
+  }
+
+  .categoryHeading {
+    margin-bottom: 2.5rem;
+  }
+
+  .categoryTitle {
+    font-size: 2.3rem;
+  }
+
+  .categorySubtitle {
+    font-size: 1rem;
+  }
+
+  /* Single column grid on phone */
+  .dishGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    max-width: 100%;
+    margin-top: 0.75rem;
+    padding-inline: 6%;
+
+
+
+  }
+
+  .filtersDesktop {
+    justify-content: start;
+  }
+
+  .groupHeader {
+    grid-column: auto;
+    margin: 5rem 0 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  /* Dish row adjustments on mobile */
+  .dish {
+    padding-bottom: 1rem;
+  }
+
+  .dishTop {
+    gap: 1rem;
+  }
+
+  .dishName {
+    font-size: 1.125rem;
+  }
+
+  .dishPrice {
+    font-size: 1.05rem;
+  }
+
+  .dishDesc {
+    font-size: 0.875rem;
+    line-height: 1.35;
+    margin-top: 0.9rem;
+    max-width: 75%;
+  }
+
+  .dishMeta {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+  }
+}

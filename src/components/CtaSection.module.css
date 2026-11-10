@@ -1,0 +1,131 @@
+.cta {
+  --u: calc(100vw / 1512);
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #000000;
+  overflow: hidden;
+  padding: 6rem 1.5rem;
+  margin-top: 5vw;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bgImage {
+  object-fit: cover;
+  object-position: center top;
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 20%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.15) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 820px;
+  width: 100%;
+  margin-top: 12vw;
+}
+
+.title {
+  width: calc(740 * var(--u) + 0.6em);
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: var(--font-ivy-presto), Georgia, serif;
+  filter: drop-shadow(calc(13.969 * var(--u)) 0 calc(18.16 * var(--u)) rgba(255, 255, 255, 0.15));
+  font-size: clamp(3rem, 4vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line {
+  display: block;
+}
+
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+.charMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding: 0.16em 0.08em;
+  margin: -0.16em -0.08em;
+}
+
+.charInner {
+  display: inline-block;
+  padding: 0.16em 0.08em;
+  margin: -0.16em -0.08em;
+  will-change: transform, background-position;
+
+  background-image: linear-gradient(165deg,
+      #7a0e0e 0%,
+      #b82525 22%,
+      #d8bbab 54%,
+      #f5f4f4 100%);
+  background-size: 100% 260%;
+  background-position: 0% 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.buttonWrapper {
+  margin-top: calc(24 * var(--u));
+}
+
+@media (max-width: 767.98px) {
+  .content {
+    margin-top: 30vw;
+  }
+
+  .cta {
+    margin-top: 25vw;
+    min-height: 80vh;
+  }
+
+  .title {
+    font-size: clamp(1.85rem, 9.6vw, 2.75rem);
+    width: auto;
+  }
+
+  .buttonWrapper {
+    margin-top: 1.25rem;
+  }
+}
