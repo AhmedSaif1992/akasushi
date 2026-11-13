@@ -7,7 +7,7 @@
   align-items: center;
   overflow: hidden;
   background-color: #000000;
-  margin-top: 20rem;
+  margin-top: 13rem;
 }
 
 /* ── Desktop Background ── */
@@ -126,6 +126,7 @@
     background-color: #000000;
     aspect-ratio: auto;
     height: auto;
+    margin-top: 6rem;
   }
 
   .desktopBg {
