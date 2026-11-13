@@ -102,7 +102,7 @@
     align-items: stretch;
     background-color: #000000;
     aspect-ratio: auto;
-    height: 186.5vw;
+    height: auto;
   }
 
   .desktopBg {
