@@ -1,7 +1,7 @@
 .storySection {
   position: relative;
   width: 100%;
-  aspect-ratio: 10/7.4669;
+  aspect-ratio: 10/7.50;
 
   display: flex;
   align-items: center;
@@ -17,29 +17,57 @@
   width: 100%;
   height: 100%;
   z-index: 1;
+  overflow: hidden;
 }
 
-.desktopBgImage {
+/* ── Parallax Layer Stack ── */
+.layerWrapper {
+  position: absolute;
+  top: -15%;
+  left: 0;
+  width: 100%;
+  height: 130%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.layerLevel_3 {
+  z-index: 1;
+}
+
+.layerLevel_2 {
+  z-index: 2;
+}
+
+.layerLevel_1 {
+  z-index: 3;
+}
+
+.layerImage {
   object-fit: cover;
   object-position: center;
+  width: 100%;
+  height: 100%;
 }
 
 .desktopOverlay {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  background: linear-gradient(90deg,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 45%,
-      rgba(0, 0, 0, 0) 75%,
-      rgba(0, 0, 0, 0) 100%);
+  z-index: 4;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.15) 45%,
+    rgba(0, 0, 0, 0) 75%,
+    rgba(0, 0, 0, 0) 100%
+  );
   pointer-events: none;
 }
 
 /* ── Centered Container (max-width 1250px) ── */
 .container {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   width: 100%;
   max-width: 1250px;
   height: 100%;
@@ -47,7 +75,6 @@
   padding: 5rem clamp(1.25rem, 4vw, 2.5rem);
   display: flex;
   align-items: flex-start;
-
 }
 
 /* ── Text Box (max-width 350px) ── */
@@ -66,7 +93,6 @@
   text-transform: uppercase;
   color: var(--gold, #ce9c6d);
   margin-bottom: 5px;
-
 }
 
 .title {
@@ -86,7 +112,6 @@
   line-height: 1.45;
   color: rgba(255, 255, 255, 1);
   margin: 0;
-
 }
 
 /* ── Mobile Standalone Image ── */
@@ -143,10 +168,5 @@
     width: 100%;
     height: 186.5vw;
     overflow: hidden;
-  }
-
-  .mobileImage {
-    object-fit: cover;
-    object-position: center;
   }
 }
