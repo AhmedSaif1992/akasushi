@@ -97,3 +97,35 @@
     line-height: 1.15;
   }
 }
+
+
+/* ── Page opening animation: start hidden (in darkness) until GSAP runs ── */
+@media (prefers-reduced-motion: no-preference) {
+  .imageWrapper,
+  .content {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Extra room inside each line mask so descenders aren't clipped */
+.content :global(.hero-line-mask) {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+
+/* ── Page opening animation: start hidden (in darkness) until GSAP runs ── */
+@media (prefers-reduced-motion: no-preference) {
+  .imageWrapper,
+  .content {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Extra room inside each line mask so descenders aren't clipped */
+.content :global(.hero-line-mask) {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}

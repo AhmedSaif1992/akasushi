@@ -4,9 +4,10 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 import styles from "./OurStorySections.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 interface LayerConfig {
   level: 1 | 2 | 3;
@@ -47,7 +48,7 @@ const STORY_SECTIONS: StorySectionItem[] = [
   {
     id: "dubai",
     eyebrow: "A New Home",
-    title: "A New Chapter in Dubai",
+    title: "Arriving in Diverse, Dreaming Dubai",
     body: "Every tradition must travel to grow. AKA carried the soul of Japanese craft to Dubai, a city of ambition and endless diversity, and found its home at Mileo The Palm on West Beach, Palm Jumeirah. Step inside and taste Japan in Dubai.",
     layers: [
       { level: 3, src: "/our-story-images/dubai/dubai-3.webp" },
@@ -58,15 +59,51 @@ const STORY_SECTIONS: StorySectionItem[] = [
 
 // Speed multipliers: 1 is fastest, 2 is medium, 3 is slowest
 const SPEED_CONFIG = {
-  1: { from: 14, to: -14 },
-  2: { from: 7, to: -7 },
-  3: { from: 2.5, to: -2.5 },
+  1: { from: 0, to: -25 },
+  2: { from: 0, to: -18 },
+  3: { from: 0, to: -10 },
 };
 
 function StoryParallaxSection({ section }: { section: StorySectionItem }) {
   const sectionRef = useRef<HTMLElement>(null);
   const desktopBgRef = useRef<HTMLDivElement>(null);
   const mobileWrapperRef = useRef<HTMLDivElement>(null);
+  const textBoxRef = useRef<HTMLDivElement>(null);
+
+  // Line-by-line mask reveal: each line slides up from behind its own mask
+  useEffect(() => {
+    const box = textBoxRef.current;
+    if (!box) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const targets = box.querySelectorAll<HTMLElement>("[data-line-reveal]");
+
+      SplitText.create(targets, {
+        type: "lines",
+        mask: "lines",
+        linesClass: "story-line",
+        // Re-splits on resize / after fonts load so line breaks stay correct
+        autoSplit: true,
+        onSplit(self) {
+          return gsap.from(self.lines, {
+            yPercent: 110,
+            duration: 1.1,
+            stagger: 0.09,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: box,
+              start: "top 80%",
+              once: true,
+            },
+          });
+        },
+      });
+    });
+
+    return () => mm.revert();
+  }, []);
 
   useEffect(() => {
     const sectionEl = sectionRef.current;
@@ -110,7 +147,7 @@ function StoryParallaxSection({ section }: { section: StorySectionItem }) {
                 trigger: triggerEl,
                 start: "top bottom",
                 end: "bottom top",
-                scrub: 1.2,
+                scrub: 1.1,
               },
             }
           );
@@ -135,9 +172,8 @@ function StoryParallaxSection({ section }: { section: StorySectionItem }) {
           <div
             key={`desktop-layer-${layer.level}`}
             data-parallax-layer={layer.level}
-            className={`${styles.layerWrapper} ${
-              styles[`layerLevel_${layer.level}`]
-            }`}
+            className={`${styles.layerWrapper} ${styles[`layerLevel_${layer.level}`]
+              }`}
           >
             <Image
               src={layer.src}
@@ -154,10 +190,16 @@ function StoryParallaxSection({ section }: { section: StorySectionItem }) {
 
       {/* Centered container with max-width 1250px and max-width 350px text box */}
       <div className={styles.container}>
-        <div className={styles.textBox}>
-          <p className={styles.eyebrow}>{section.eyebrow}</p>
-          <h2 className={styles.title}>{section.title}</h2>
-          <p className={styles.body}>{section.body}</p>
+        <div ref={textBoxRef} className={styles.textBox}>
+          <p className={styles.eyebrow} data-line-reveal>
+            {section.eyebrow}
+          </p>
+          <h2 className={styles.title} data-line-reveal>
+            {section.title}
+          </h2>
+          <p className={styles.body} data-line-reveal>
+            {section.body}
+          </p>
         </div>
       </div>
 
@@ -171,9 +213,8 @@ function StoryParallaxSection({ section }: { section: StorySectionItem }) {
           <div
             key={`mobile-layer-${layer.level}`}
             data-parallax-layer={layer.level}
-            className={`${styles.layerWrapper} ${
-              styles[`layerLevel_${layer.level}`]
-            }`}
+            className={`${styles.layerWrapper} ${styles[`layerLevel_${layer.level}`]
+              }`}
           >
             <Image
               src={layer.src}

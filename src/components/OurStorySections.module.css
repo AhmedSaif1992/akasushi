@@ -7,7 +7,7 @@
   align-items: center;
   overflow: hidden;
   background-color: #000000;
-  margin-block: 10vw;
+  margin-top: 20rem;
 }
 
 /* ── Desktop Background ── */
@@ -23,10 +23,10 @@
 /* ── Parallax Layer Stack ── */
 .layerWrapper {
   position: absolute;
-  top: -15%;
+  top: 0%;
   left: 0;
   width: 100%;
-  height: 130%;
+  height: 100%;
   pointer-events: none;
   will-change: transform;
 }
@@ -54,13 +54,11 @@
   position: absolute;
   inset: 0;
   z-index: 4;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.45) 0%,
-    rgba(0, 0, 0, 0.15) 45%,
-    rgba(0, 0, 0, 0) 75%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.45) 0%,
+      rgba(0, 0, 0, 0.15) 45%,
+      rgba(0, 0, 0, 0) 75%,
+      rgba(0, 0, 0, 0) 100%);
   pointer-events: none;
 }
 
@@ -169,4 +167,20 @@
     height: 186.5vw;
     overflow: hidden;
   }
+}
+
+
+/* ── Line reveal masks (created by GSAP SplitText) ──
+   A little extra room so descenders (g, y, p) aren't clipped by the mask */
+.textBox :global(.story-line-mask) {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+
+/* ── Line reveal masks (created by GSAP SplitText) ──
+   A little extra room so descenders (g, y, p) aren't clipped by the mask */
+.textBox :global(.story-line-mask) {
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
 }
