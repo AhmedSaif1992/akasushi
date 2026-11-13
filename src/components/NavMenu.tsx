@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/menu", label: "Menu" },
   { href: "/events", label: "Events" },
-  { href: "/private-dining", label: "Private Dining" },
+  { href: "/our-story", label: "Our Story" },
   { href: "/journal", label: "Journal" },
 ];
 

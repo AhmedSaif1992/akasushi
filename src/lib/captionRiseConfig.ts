@@ -59,3 +59,4 @@ export const RISE_TYPE_PX = {
 export const RISE_KANJI_BLEND = "color-dodge";
 export const RISE_KANJI_COLOR = "rgb(202 75 75 / 0.85)";
 export const RISE_KANJI_BLUR_PX = 1;
+
