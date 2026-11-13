@@ -1,0 +1,149 @@
+.storySection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+/* ── Desktop Background ── */
+.desktopBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.desktopBgImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.desktopOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.52) 45%,
+    rgba(0, 0, 0, 0.18) 75%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Centered Container (max-width 1250px) ── */
+.container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 5rem clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+}
+
+/* ── Text Box (max-width 350px) ── */
+.textBox {
+  max-width: 350px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-family: var(--font-tt-drugs), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold, #ce9c6d);
+  margin: 0 0 1rem 0;
+}
+
+.title {
+  font-family: var(--font-ivy-presto-display), Georgia, serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.18;
+  color: #ffffff;
+  margin: 0 0 1.25rem 0;
+  white-space: pre-line;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.7);
+}
+
+.body {
+  font-family: var(--font-tt-drugs), sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Mobile Standalone Image ── */
+.mobileImageWrapper {
+  display: none;
+}
+
+/* ── Mobile Layout (< 769px) ── */
+@media (max-width: 768px) {
+  .storySection {
+    min-height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: #000000;
+  }
+
+  .desktopBg {
+    display: none;
+  }
+
+  .container {
+    padding: 3.5rem 1.5rem 2.5rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .textBox {
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 14px;
+    margin-bottom: 0.85rem;
+  }
+
+  .title {
+    font-size: 38px;
+    line-height: 1.15;
+    margin-bottom: 1.15rem;
+  }
+
+  .body {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .mobileImageWrapper {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 186.5vw;
+    overflow: hidden;
+  }
+
+  .mobileImage {
+    object-fit: cover;
+    object-position: center;
+  }
+}
