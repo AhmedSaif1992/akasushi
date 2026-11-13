@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import OurStoryHero from "@/components/OurStoryHero";
 import OurStorySections from "@/components/OurStorySections";
+import CtaSection from "@/components/CtaSection";
 
 export const metadata: Metadata = {
   title: "The Crimson Story of AKA Sushi | AKA Restaurant & Lounge",
@@ -13,6 +14,7 @@ export default function OurStoryPage() {
     <main>
       <OurStoryHero />
       <OurStorySections />
+      <CtaSection />
     </main>
   );
 }

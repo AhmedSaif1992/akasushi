@@ -13,7 +13,7 @@ const STORY_SECTIONS: StorySectionItem[] = [
   {
     id: "origins",
     eyebrow: "The ORIGINS",
-    title: "Born in The Ancient Kyoto,\nJapan",
+    title: "Born in The Ancient Kyoto, Japan",
     body: "Long before AKA became a destination, it was an idea born in the heart of Japan. It was inspired by a culture where the energy of modern cities lives in harmony with the silence of ancient temples, and where every detail, however small, carries meaning.",
     image: "/our-story-images/kyoto.webp",
   },
@@ -80,3 +80,4 @@ export default function OurStorySections() {
     </>
   );
 }
+
