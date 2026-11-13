@@ -10,6 +10,25 @@ import { WebCodecsPlayer, smoothProgress } from "@/lib/webcodecsPlayer";
 import Button from "./Button";
 import HeartOfJapan from "./HeartOfJapan";
 import { useReserveModal } from "./ReserveModal";
+import {
+  FINALE_CAPTIONS,
+  CAPTION_BEAT_STARTS_PCT,
+  CAPTION_EDGE_FADE,
+  RISE_TRAVEL_FROM_VH,
+  RISE_TRAVEL_TO_VH,
+  RISE_SPEED_FACTOR,
+  RISE_OVERLAP,
+  RISE_FADE_EDGE,
+  RISE_KANJI_SPEED_FACTOR,
+  RISE_FIGMA_REF,
+  RISE_LAYOUT,
+  RISE_SIDE_OFFSET_PX,
+  RISE_KANJI_SIZE_PX,
+  RISE_TYPE_PX,
+  RISE_KANJI_BLEND,
+  RISE_KANJI_COLOR,
+  RISE_KANJI_BLUR_PX,
+} from "@/lib/captionRiseConfig";
 import styles from "./HeroSection.module.css";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -49,6 +68,11 @@ export default function HeroSection({
   // Initialize WebCodecs players for 2nd-video and 3rd-video
   const player2Ref = useRef<WebCodecsPlayer | null>(null);
   const player3Ref = useRef<WebCodecsPlayer | null>(null);
+
+  // Finale Rise Captions & Kanji refs
+  const finaleItemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const finaleKanjiRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const finaleTextRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
@@ -183,6 +207,143 @@ export default function HeroSection({
         (window.innerWidth < 768 || "ontouchstart" in window);
       const smoothingFactor = isTouchDevice ? 38 : 14;
 
+      // ── Finale Rise Captions & Kanji watermark choreography ──────────
+      const applyRiseLayout = () => {
+        const { desktop: dRef, mobile: mRef } = RISE_FIGMA_REF;
+        const phonePx = (px: number) => {
+          const vw = `${(px / mRef.width) * 100}vw`;
+          return px < 0 ? `max(${vw}, ${px}px)` : `min(${vw}, ${px}px)`;
+        };
+
+        finaleItemRefs.current.forEach((item, i) => {
+          if (!item) return;
+          const cap = FINALE_CAPTIONS[i];
+          if (!cap) return;
+          const edge = `${(RISE_SIDE_OFFSET_PX / dRef.width) * 100}vw`;
+          if (cap.side === "left") {
+            item.style.left = edge;
+            item.style.right = "auto";
+          } else {
+            item.style.right = edge;
+            item.style.left = "auto";
+          }
+
+          const L = RISE_LAYOUT[i];
+          if (L) {
+            item.style.setProperty(
+              "--rise-top",
+              `${(L.desktop.textTop / dRef.height) * 100}vh`
+            );
+            item.style.setProperty(
+              "--text-width",
+              `${(L.desktop.textWidth / dRef.width) * 100}vw`
+            );
+            item.style.setProperty(
+              "--kanji-x",
+              `${(L.desktop.kanjiX / dRef.width) * 100}vw`
+            );
+            item.style.setProperty(
+              "--kanji-y",
+              `${(L.desktop.kanjiY / dRef.width) * 100}vw`
+            );
+            item.style.setProperty(
+              "--kanji-size",
+              `${(RISE_KANJI_SIZE_PX.desktop / dRef.width) * 100}vw`
+            );
+
+            item.style.setProperty(
+              "--rise-top-m",
+              `${(L.mobile.textTop / mRef.height) * 100}vh`
+            );
+            item.style.setProperty(
+              "--text-width-m",
+              phonePx(L.mobile.textWidth)
+            );
+            item.style.setProperty("--kanji-x-m", phonePx(L.mobile.kanjiX));
+            item.style.setProperty("--kanji-y-m", phonePx(L.mobile.kanjiY));
+            item.style.setProperty(
+              "--kanji-size-m",
+              phonePx(RISE_KANJI_SIZE_PX.mobile)
+            );
+            item.style.setProperty(
+              "--eyebrow-size-m",
+              phonePx(RISE_TYPE_PX.mobile.eyebrow)
+            );
+            item.style.setProperty(
+              "--title-size-m",
+              phonePx(RISE_TYPE_PX.mobile.title)
+            );
+          }
+          item.style.setProperty("--kanji-blend", RISE_KANJI_BLEND);
+          item.style.setProperty("--kanji-color", RISE_KANJI_COLOR);
+          item.style.setProperty("--kanji-blur", `${RISE_KANJI_BLUR_PX}px`);
+        });
+      };
+
+      const updateCaptions = (finaleProgress: number) => {
+        const n = FINALE_CAPTIONS.length;
+        const isPhone = window.innerWidth <= 768;
+        const lane = isPhone ? "mobile" : "desktop";
+        const from = RISE_TRAVEL_FROM_VH[lane];
+        const to = RISE_TRAVEL_TO_VH[lane];
+
+        const edgeFade =
+          finaleProgress < CAPTION_EDGE_FADE
+            ? finaleProgress / CAPTION_EDGE_FADE
+            : finaleProgress > 1 - CAPTION_EDGE_FADE
+              ? Math.max(0, (1 - finaleProgress) / CAPTION_EDGE_FADE)
+              : 1;
+
+        for (let i = 0; i < n; i++) {
+          const nominalStart = CAPTION_BEAT_STARTS_PCT[i] / 100;
+          const nominalEnd =
+            i + 1 < n ? CAPTION_BEAT_STARTS_PCT[i + 1] / 100 : 1;
+          const beatDuration = nominalEnd - nominalStart;
+          const overlapAmount = RISE_OVERLAP * beatDuration;
+          const activeStart = Math.max(0, nominalStart - overlapAmount);
+          const activeEnd = Math.min(1, nominalEnd + overlapAmount);
+          const span = activeEnd - activeStart;
+          const localT =
+            span > 0
+              ? gsap.utils.clamp(0, 1, (finaleProgress - activeStart) / span)
+              : 0;
+
+          const travel = from + (to - from) * localT;
+          const fade =
+            localT < RISE_FADE_EDGE
+              ? localT / RISE_FADE_EDGE
+              : localT > 1 - RISE_FADE_EDGE
+                ? (1 - localT) / RISE_FADE_EDGE
+                : 1;
+
+          const layerOpacity = fade * edgeFade;
+          const textEl = finaleTextRefs.current[i];
+          const kanjiEl = finaleKanjiRefs.current[i];
+
+          if (textEl) {
+            gsap.set(textEl, {
+              y: `${travel * RISE_SPEED_FACTOR}vh`,
+              opacity: layerOpacity,
+            });
+          }
+          if (kanjiEl) {
+            gsap.set(kanjiEl, {
+              y: `${travel * RISE_KANJI_SPEED_FACTOR}vh`,
+              opacity: layerOpacity,
+            });
+          }
+        }
+      };
+
+      applyRiseLayout();
+      updateCaptions(0);
+
+      const handleResize = () => {
+        applyRiseLayout();
+        updateCaptions(videoProgressCurrent.v3);
+      };
+      window.addEventListener("resize", handleResize);
+
       let lastTime = performance.now();
       let isCanvas2Visible = false;
       const onTick = () => {
@@ -217,6 +378,7 @@ export default function HeroSection({
         if (Math.abs(nextV3 - videoProgressCurrent.v3) > 0.0001) {
           videoProgressCurrent.v3 = nextV3;
           player3Ref.current?.seekToProgress(nextV3);
+          updateCaptions(nextV3);
         }
       };
 
@@ -329,6 +491,7 @@ export default function HeroSection({
 
       return () => {
         window.removeEventListener("aka:doors-opened", revealHeroText);
+        window.removeEventListener("resize", handleResize);
         gsap.ticker.remove(onTick);
       };
     },
@@ -434,6 +597,41 @@ export default function HeroSection({
           className={styles.scrubCanvas}
           aria-hidden="true"
         />
+
+        {/* Finale Captions & Kanji Watermarks (Rise Effect) */}
+        <div className={styles.finaleRise} aria-hidden="true">
+          {FINALE_CAPTIONS.map((cap, i) => (
+            <div
+              key={cap.title}
+              ref={(el) => {
+                finaleItemRefs.current[i] = el;
+              }}
+              className={`${styles.finaleRiseItem} ${
+                cap.side === "left"
+                  ? styles.finaleRiseItem_left
+                  : styles.finaleRiseItem_right
+              }`}
+            >
+              <span
+                ref={(el) => {
+                  finaleKanjiRefs.current[i] = el;
+                }}
+                className={styles.finaleRiseKanji}
+              >
+                {cap.kanji}
+              </span>
+              <div
+                ref={(el) => {
+                  finaleTextRefs.current[i] = el;
+                }}
+                className={styles.finaleRiseText}
+              >
+                <p className={styles.finaleCaptionEyebrow}>{cap.eyebrow}</p>
+                <h3 className={styles.finaleCaptionTitle}>{cap.title}</h3>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

@@ -12,6 +12,7 @@
   --gold: #ce9c6d;
   --red: #DC2218;
   --red-glow: #310000;
+  --font-kanji: var(--font-aoyagi), "Aoyagi Kouzan", serif;
 }
 
 html,

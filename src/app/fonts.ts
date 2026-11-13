@@ -50,3 +50,11 @@ export const ttDrugs = localFont({
   variable: "--font-tt-drugs",
   display: "swap",
 });
+
+export const aoyagiKouzan = localFont({
+  src: "./fonts/AoyagiKouzanT.woff2",
+  weight: "400",
+  style: "normal",
+  variable: "--font-aoyagi",
+  display: "swap",
+});

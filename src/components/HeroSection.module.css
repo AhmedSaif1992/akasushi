@@ -166,6 +166,120 @@
   will-change: opacity;
 }
 
+/* ── Finale Captions & Kanji Watermarks (Rise Effect) ── */
+.finaleRise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.finaleRiseItem {
+  position: absolute;
+  top: calc(50% + var(--rise-top, 0px));
+  width: var(--text-width, 28.5rem);
+  max-width: calc(100vw - 2.4rem);
+  text-align: left;
+}
+
+.finaleRiseItem_left {
+  /* left position dynamically set via inline style */
+}
+
+.finaleRiseItem_right {
+  /* right position dynamically set via inline style */
+}
+
+.finaleCaptionEyebrow,
+.finaleCaptionTitle {
+  color: #ffffff;
+}
+
+.finaleCaptionEyebrow {
+  font-family: var(--font-ivy-presto-display), var(--font-ivy-presto), Georgia, serif;
+  font-size: clamp(1.1rem, 0.8rem + 1.27vw, 2rem);
+  font-weight: 400;
+  line-height: 1.04;
+  margin: 0;
+}
+
+.finaleCaptionTitle {
+  font-family: var(--font-ivy-presto-display), var(--font-ivy-presto), Georgia, serif;
+  font-size: clamp(2rem, 1.2rem + 4.29vw, 5.25rem);
+  font-weight: 400;
+  line-height: 1.04;
+  margin: 0;
+  text-shadow: 14px 0 35px rgba(255, 255, 255, 0.13);
+}
+
+.finaleRiseKanji {
+  position: absolute;
+  z-index: 7;
+  top: var(--kanji-y, 0px);
+  mix-blend-mode: var(--kanji-blend, color-dodge);
+  font-family: var(--font-kanji), serif;
+  font-size: var(--kanji-size, 15vw);
+  line-height: 1.04;
+  color: var(--kanji-color, rgb(202 75 75 / 0.85));
+  filter: blur(var(--kanji-blur, 1px));
+  opacity: 0;
+  white-space: nowrap;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.finaleRiseItem_left .finaleRiseKanji {
+  left: var(--kanji-x, 0px);
+  right: auto;
+}
+
+.finaleRiseItem_right .finaleRiseKanji {
+  right: var(--kanji-x, 0px);
+  left: auto;
+}
+
+.finaleRiseText {
+  position: relative;
+  z-index: 7;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 47.99em) {
+  .finaleRiseItem {
+    left: 0 !important;
+    right: 0 !important;
+    margin-inline: auto;
+    top: calc(50% + var(--rise-top-m, 0px));
+    text-align: center;
+    width: var(--text-width-m, 92vw);
+    max-width: calc(100vw - 2.4rem);
+  }
+
+  .finaleRiseItem .finaleCaptionEyebrow {
+    font-size: var(--eyebrow-size-m, min(5.97vw, 1.5rem));
+  }
+
+  .finaleRiseItem .finaleCaptionTitle {
+    font-size: var(--title-size-m, min(15.92vw, 4rem));
+    text-shadow: 14px 0 35.6px #000000;
+  }
+
+  .finaleRiseKanji {
+    top: var(--kanji-y-m, 0px);
+    font-size: var(--kanji-size-m, min(59.7vw, 240px));
+  }
+
+  .finaleRiseItem_left .finaleRiseKanji {
+    left: var(--kanji-x-m, 0px);
+  }
+
+  .finaleRiseItem_right .finaleRiseKanji {
+    right: var(--kanji-x-m, 0px);
+  }
+}
+
+
 @media (max-width: 768px) {
   .container {
     padding: 0 1.25rem 4rem 1.25rem;
